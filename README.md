@@ -1,6 +1,3 @@
-# autotest
-使用excel实现自动化测试，目前需要在eclipse上下载TestNG插件使用。
-
 框架使用指南：
 	excel后缀名为 xlsx(可以更改代码)，excel的第一行不会被代码读取（可以写备注）
 	失败后的截图文件在 \ZhuYuan\test-output\snapshot 目录下
@@ -16,17 +13,17 @@
 
 目前有的方法 （方法名大小写都可以）
 （控件值：元素的 xpath 定位器）
-打开网址：			open 			 + 参数（http://xxxx） 		
-点击 ：				click	 + 控件
-文本输入:			sendkeys + 控件	 + 参数（文本）					
-上传文件		:非 flash 上传可以用上面的sendkeys方法,参数为要上传的文件:路径+名称 例如 C:\Users\123\Pictures\a.png
-按键盘ENTER键 :		enter											
-鼠标悬停在元素上：	hover	 + 控件									用于：鼠标悬停在元素上其他元素才出现，
-屏幕移动到元素 ：		move	 + 控件									用于：(一般出现在谷歌浏览器)解决不能点击不在显示区域的元素
-删除标签和内容：		delete	 + 控件									用于：被X标签遮挡需要的元素，那么把X标签删除，例：position:fixed;
-选中选择框value :	select	 + 控件	 + 参数(option的value值)			用于：下拉框，选取下拉框的值
-切换屏幕	：			switch											用于：Auto运行中打开新浏览器窗口，需要witch窗口，(如果窗口超过2个，这方法需要更改)
-进入IFrame :			iframe	 + 控件									用于：元素在<iframe>或<frame>中要先进入IFrame才能操作元素
+打开网址：		    open 		 + 参数（http://xxxx） 		
+点击 ：		     click	+ 控件
+文本输入:		    sendkeys   + 控件	+ 参数（文本）					
+上传文件	:非 flash 上传可以用上面的sendkeys方法,参数为要上传的文件:路径+名称 例如 C:\Users\123\Pictures\a.png
+按键盘ENTER键 :	    enter											
+鼠标悬停在元素上：	hover	  + 控件					用于：鼠标悬停在元素上其他元素才出现，
+屏幕移动到元素 ：	 move	   + 控件					 用于：(一般出现在谷歌浏览器)解决不能点击不在显示区域的元素
+删除标签和内容：	 delete	   + 控件				 	 用于：被X标签遮挡需要的元素，那么把X标签删除，例：position:fixed;
+选中选择框value :	   select     + 控件     + 参数(option的value值)	用于：下拉框，选取下拉框的值
+切换屏幕：		   switch				             用于：Auto运行中打开新浏览器窗口，需要witch窗口，(如果窗口超过2个，这方法需要更改)
+进入IFrame :	     iframe	+ 控件				     用于：元素在<iframe>或<frame>中要先进入IFrame才能操作元素
 等待 ：				wait 			 + 参数（时间）单位为:秒			用于：中途暂停，等待页面
 等待元素出现 :		waitele	 + 控件	 + 参数（时间）单位为:秒			用于：等待未加载完成的元素(比wait智能，只有元素出现就会停止等待)
 接受警告：			accept											用于：接受弹出的Alert警告框
