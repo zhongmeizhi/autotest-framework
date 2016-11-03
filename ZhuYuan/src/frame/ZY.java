@@ -1,6 +1,8 @@
 package frame;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -13,7 +15,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -33,8 +38,8 @@ public class ZY {
 
     @Test(dataProvider = "db")
     public void autoTest(String path, String excel, String sheet) {
-        ZY.name = excel + "-" + sheet;
         Reporter.log("<strong style='color:green;'>Auto Start!</strong>");
+        ZY.name = excel + sheet;
         System.out.println(path + "-" + excel + "-" + sheet);
 
         // XXX get excel data
@@ -78,7 +83,16 @@ public class ZY {
                 value = "empty";
             }
             if (value != "empty") {
-                element = driver.findElement(By.xpath(value));
+                if (!key.equals("waitele")) {
+                    try {
+                        new WebDriverWait(driver, 3).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(value)));
+                        element = driver.findElement(By.xpath(value));
+                    }
+                    catch (Exception e) {
+                        Reporter.log("<Strong style=\"color: red;\"> 等3秒元素未出现! </strong> ");
+                        element = driver.findElement(By.xpath(value));
+                    }
+                }
             }
             try {
                 parameter = data[i][2].toString().toLowerCase().trim().replace("[", "").replace("]", "");
@@ -91,63 +105,61 @@ public class ZY {
             // new ZYCase().use(key, value, parameter, element, parameter, driver);
             ZYCases.use(i, key, value, parameter, element, description, driver);
         }
-        Reporter.log("<Strong style=\"color: green;\"> AUTO TEST PASS ! </strong>");
         driver.close();
     }
 
-    // // quit is use in listener
-    // @AfterMethod
-    // public void quit() {
-    // driver.quit();
-    // }
+    @AfterClass
+    public void quit() {
+        openIndex();
+    }
 
-    // // XXX get properties
-    // String[][] getProperties() {
-    // String filePath = "./auto.properties"; // 当前目录就是项目工程目录
-    // File configFile = new File(filePath); // 配置文件路径
-    // Properties properties = new Properties();
-    // try {
-    // FileInputStream config = new FileInputStream(configFile); // 用数据流读取文件
-    // properties.load(config); // 加载配置文件
-    // }
-    // catch (Exception e) {
-    // }
-    // String number = null;
-    // String path = null;
-    // String excel = null;
-    // String sheet = null;
-    // try {
-    // number = properties.getProperty("number");
-    // }
-    // catch (Exception e) {
-    // }
-    // try {
-    // path = properties.getProperty("path");
-    // }
-    // catch (Exception e) {
-    // }
-    // try {
-    // excel = properties.getProperty("excel");
-    // }
-    // catch (Exception e) {
-    // }
-    // try {
-    // sheet = properties.getProperty("sheet");
-    // }
-    // catch (Exception e) {
-    // }
-    // System.out.println(number + " " + path + " " + excel + " " + sheet);
-    // String[] excelValue = excel.split(",");
-    // String[] sheetValue = sheet.split(",");
-    // String[][] arrs = new String[3][Integer.parseInt(number)];
-    // for (int i = 0; i < Integer.parseInt(number); i++) {
-    // arrs[i][0] = path;
-    // arrs[i][1] = excelValue[i];
-    // arrs[i][2] = sheetValue[i];
-    // System.out.println(path + "——" + excelValue[i] + "——" + sheetValue[i]);
-    // }
-    // return arrs;
-    // }
+    // XXX get properties
+    String[][] getAutoProperties() {
+        String filePath = "./auto.properties";
+        File configFile = new File(filePath);
+        Properties properties = new Properties();
+        try {
+            FileInputStream config = new FileInputStream(configFile);
+            properties.load(config);
+        }
+        catch (Exception e) {
+        }
+        String number = null;
+        String path = null;
+        String excel = null;
+        String sheet = null;
+        try {
+            number = properties.getProperty("number");
+        }
+        catch (Exception e) {
+        }
+        try {
+            path = properties.getProperty("path");
+        }
+        catch (Exception e) {
+        }
+        try {
+            excel = properties.getProperty("excel");
+        }
+        catch (Exception e) {
+        }
+        try {
+            sheet = properties.getProperty("sheet");
+        }
+        catch (Exception e) {
+        }
+        System.out.println(number + " " + path + " " + excel + " " + sheet);
+        String[] excelValue = excel.split(",");
+        String[] sheetValue = sheet.split(",");
+        String[][] arrs = new String[3][Integer.parseInt(number)];
+        for (int i = 0; i < Integer.parseInt(number); i++) {
+            arrs[i][0] = path;
+            arrs[i][1] = excelValue[i];
+            arrs[i][2] = sheetValue[i];
+            System.out.println(path + "——" + excelValue[i] + "——" + sheetValue[i]);
+        }
+        return arrs;
+    }
 
     String[][] getProperties() {
         // XXX get excel data
@@ -223,6 +235,11 @@ public class ZY {
     }
 
     public void openIndex() {
-
+        try {
+            Desktop.getDesktop().open(new File("./test-output/index.html"));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

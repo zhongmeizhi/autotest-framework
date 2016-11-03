@@ -1,5 +1,6 @@
 package frame;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -23,6 +24,13 @@ public class ZYCases {
     static String mapValue = null;
     static String actual = null;
     static String expect = null;
+
+    static void clear() {
+        mapKey = null;
+        mapValue = null;
+        actual = null;
+        expect = null;
+    }
 
     public static void use(int i, String key, String value, String parameter, WebElement element, String description, WebDriver driver) {
 
@@ -60,8 +68,19 @@ public class ZYCases {
             }
             Reporter.log("<strong style=\"background: green;\">Step: " + (i + 1) + " </strong>:" + description + ". ");
             break;
+        case "exe":
+            Runtime runtime = Runtime.getRuntime();
+            try {
+                runtime.exec(parameter);
+            }
+            catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            Reporter.log("<strong style=\"background: green;\">Step: " + (i + 1) + " </strong>:" + description + ". ");
+            break;
         case "waitele":
             new WebDriverWait(driver, Integer.parseInt(parameter) * 1000).until(ExpectedConditions.visibilityOf(element));
+            Reporter.log("<strong style=\"background: green;\">Step: " + (i + 1) + " </strong>:" + description + ". ");
             break;
         case "move":
             wait.until(ExpectedConditions.visibilityOf(element));
@@ -94,6 +113,7 @@ public class ZYCases {
             break;
         case "iframe":
             new WebDriverWait(driver, 5).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(element));
+            Reporter.log("<strong style=\"background: green;\">Step: " + (i + 1) + " </strong>:" + description + ". ");
             break;
         case "accept":
             alert = driver.switchTo().alert();
@@ -137,6 +157,18 @@ public class ZYCases {
             actual = map.get(p1);
             expect = map.get(p2);
             Assert.assertEquals(actual, expect);
+            Reporter.log("<strong style=\"background: green;\">Step: " + (i + 1) + " </strong>:" + description + ". ");
+            break;
+        case "contain":
+            String p3 = parameter.split(">")[0];
+            String p4 = parameter.split(">")[1];
+            actual = map.get(p3);
+            expect = p4;
+            Assert.assertTrue(actual.contains(expect));
+            Reporter.log("<strong style=\"background: green;\">Step: " + (i + 1) + " </strong>:" + description + ". ");
+            break;
+        case "exist":
+            Assert.assertTrue(element.isDisplayed());
             Reporter.log("<strong style=\"background: green;\">Step: " + (i + 1) + " </strong>:" + description + ". ");
             break;
         case "end":

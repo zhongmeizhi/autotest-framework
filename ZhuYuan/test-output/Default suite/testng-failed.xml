@@ -6,6 +6,7 @@
       <class name="frame.ZY">
         <methods>
           <include name="autoTest" invocation-numbers="0"/>
+          <include name="quit"/>
         </methods>
       </class> <!-- frame.ZY -->
     </classes>

@@ -20,9 +20,10 @@ public class TestNGListener extends TestListenerAdapter {
         if (ZYCases.actual != null | ZYCases.expect != null) {
             Reporter.log("<Strong style=\"color: brown;\"> Expect:[" + ZYCases.expect + "] Actual:[" + ZYCases.actual + "]</strong> ");
         }
+        ZYCases.clear();
         Reporter.log("<Strong style=\"color: red;\"> Fail! [" + ZY.description + "] SCREEN: </strong> ");
         Reporter.log("<a href=./snapshot/" + name + ".png/ target=_blank ><img style=\"width: 30px;\"  src=\"./snapshot/" + name + ".png/ \"></a>", true);
-        new ZY().openIndex();
+        // new ZY().openIndex();
         ZY.driver.quit();
     }
 
@@ -41,6 +42,7 @@ public class TestNGListener extends TestListenerAdapter {
     @Override
     public void onTestStart(ITestResult result) {
         super.onTestStart(result);
+        ZYCases.clear();
     }
 
     @Override
@@ -51,6 +53,8 @@ public class TestNGListener extends TestListenerAdapter {
     @Override
     public void onFinish(ITestContext testContext) {
         super.onFinish(testContext);
+        ZYCases.clear();
+        Reporter.log("<Strong style=\"color: green;\"> AUTO TEST PASS ! </strong>");
         ZY.driver.quit();
     }
 
