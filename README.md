@@ -1,15 +1,20 @@
-框架使用指南：
-	excel后缀名为 xlsx(可以更改代码)，excel的第一行不会被代码读取（可以写备注）
-	失败后的截图文件在 \ZhuYuan\test-output\snapshot 目录下
-	在文件路径 /ZhuYuan/test-output/index.html 的 "Reporter output"中查看自制测试报告
-1、在 properties.xlsx 中填写：excel表路径  	excel名称	sheet名称
-	路径是 ./xxx/ 要以 "/"结尾
-	可以同时运行多个 excel 表的用例（更改代码可以并发）
-2、将用例步骤填写到 其他excel表中
-	excel的1,2,3,4 列 分别是：操作，控件，参数，说明，如果没有说明，在"Reporter output"显示 empty
-	纯数字参数要用 [] 中括号包裹 
-	控件获得方法：FireFox浏览器，下载 FireBug插件和FirePath插件，打开F12 然后选择元素获得 xpath 路径
-3、运行 ZY.java 程序
+# 框架使用指南：
+*附:zy是我对象->没错我是来秀恩爱的*
+
+## 目录结构
+* excel后缀名为 xlsx(可以更改代码)，excel的第一行不会被代码读取（可以写备注）
+* 失败后的截图文件在 \ZhuYuan\test-output\snapshot 目录下
+* 在文件路径 /ZhuYuan/test-output/index.html 的 "Reporter output"中查看自制测试报告
+
+## 入坑流程
+1. 在 properties.xlsx 中填写：excel表路径  	excel名称	sheet名称
+  * 路径是 ./xxx/ 要以 "/"结尾
+  * 可以同时运行多个 excel 表的用例（更改代码可以并发）
+2. 将用例步骤填写到 其他excel表中
+  * excel的1,2,3,4 列 分别是：操作，控件，参数，说明，如果没有说明，在"Reporter output"显示 empty
+  * 纯数字参数要用 [] 中括号包裹 
+  * 控件获得方法：FireFox浏览器，下载 FireBug插件和FirePath插件，打开F12 然后选择元素获得 xpath 路径
+3. 运行 ZY.java 程序
 
 目前有的方法 （方法名大小写都可以）
 （控件值：元素的 xpath 定位器）
