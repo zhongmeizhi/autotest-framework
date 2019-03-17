@@ -16,9 +16,10 @@
   * 控件获得方法：FireFox浏览器，下载 FireBug插件和FirePath插件，打开F12 然后选择元素获得 xpath 路径
 3. 运行 ZY.java 程序
 
-目前有的方法 （方法名大小写都可以）
-（控件值：元素的 xpath 定位器）
-打开网址：		    open 		 + 参数（http://xxxx） 		
+## 方法/指令
+* 目前有的方法 （方法名大小写都可以）
+* 控件值：元素的 xpath 定位器
+打开网址：> open 		 + 参数（http://xxxx） 
 点击 ：		     click	+ 控件
 文本输入:		    sendkeys   + 控件	+ 参数（文本）					
 上传文件	:非 flash 上传可以用上面的sendkeys方法,参数为要上传的文件:路径+名称 例如 C:\Users\123\Pictures\a.png
